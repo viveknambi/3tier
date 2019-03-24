@@ -20,7 +20,7 @@ data "template_file" "web_task" {
 
   vars {
     image     = "${aws_ecr_repository.web.repository_url}"
-    api_url   = "http://${aws_alb.api.dns_name}"
+    api_url   = "http://api.3tier.robkinyon.org"
     port      = "3000"
     region    = "${var.region}"
     log_group = "${aws_cloudwatch_log_group.web.name}"
