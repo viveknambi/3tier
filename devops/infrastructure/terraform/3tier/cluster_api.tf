@@ -47,7 +47,7 @@ data "aws_ecs_task_definition" "api" {
 resource "aws_ecs_service" "api" {
   name            = "api-${var.environment_name}"
   task_definition = "${aws_ecs_task_definition.api.family}:${max("${aws_ecs_task_definition.api.revision}", "${data.aws_ecs_task_definition.api.revision}")}"
-  desired_count   = 1
+  desired_count   = 2
   launch_type     = "FARGATE"
   cluster         = "${aws_ecs_cluster.api.id}"
   depends_on      = [

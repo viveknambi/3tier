@@ -47,7 +47,7 @@ data "aws_ecs_task_definition" "web" {
 resource "aws_ecs_service" "web" {
   name            = "web-${var.environment_name}"
   task_definition = "${aws_ecs_task_definition.web.family}:${max("${aws_ecs_task_definition.web.revision}", "${data.aws_ecs_task_definition.web.revision}")}"
-  desired_count   = 1
+  desired_count   = 2
   launch_type     = "FARGATE"
   cluster         = "${aws_ecs_cluster.web.id}"
   depends_on      = [
