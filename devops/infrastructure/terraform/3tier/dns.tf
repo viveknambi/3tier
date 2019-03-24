@@ -1,10 +1,10 @@
 data "aws_route53_zone" "robkinyon" {
-  name = "robkinyon.org"
+  name = "${var.dns_zone}"
 }
 
 resource "aws_route53_record" "web" {
   zone_id = "${data.aws_route53_zone.robkinyon.zone_id}"
-  name    = "www.3tier.${data.aws_route53_zone.robkinyon.name}"
+  name    = "${var.web_name}.${data.aws_route53_zone.robkinyon.name}"
   type    = "A"
 
   alias {
@@ -16,7 +16,7 @@ resource "aws_route53_record" "web" {
 
 resource "aws_route53_record" "api" {
   zone_id = "${data.aws_route53_zone.robkinyon.zone_id}"
-  name    = "api.3tier.${data.aws_route53_zone.robkinyon.name}"
+  name    = "${var.api_name}.${data.aws_route53_zone.robkinyon.name}"
   type    = "A"
 
   alias {

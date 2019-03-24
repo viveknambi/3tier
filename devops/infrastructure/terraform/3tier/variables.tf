@@ -27,6 +27,21 @@ variable "vpc_cidr_suffix" {
   default = "0.0/16"
 }
 
+variable "dns_zone" {
+  type = "string"
+  description = "Registered DNS name of Route53 zone to put all DNS names"
+}
+variable "web_name" {
+  type = "string"
+  description = "Registered DNS name of Route53 zone to put all DNS names"
+  default = "www"
+}
+variable "api_name" {
+  type = "string"
+  description = "Registered DNS name of Route53 zone to put all DNS names"
+  default = "api"
+}
+
 variable "root_db_user" {
   type = "string"
   description = "Root database password"
