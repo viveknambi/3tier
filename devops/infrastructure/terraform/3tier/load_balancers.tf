@@ -1,0 +1,87 @@
+resource "random_id" "target_group_sufix" {
+  byte_length = 2
+}
+
+################################################################################
+
+resource "aws_alb_target_group" "api" {
+  name     = "api-${var.environment_name}-${random_id.target_group_sufix.hex}"
+  port     = "3000"
+  protocol = "HTTP"
+  vpc_id   = "${aws_vpc.main.id}"
+  target_type = "ip"
+
+  lifecycle {
+    create_before_destroy = true
+  }
+
+  tags {
+    Name        = "api-${var.environment_name}"
+    Environment = "${var.environment_name}"
+  }
+}
+
+resource "aws_alb" "api" {
+  name            = "api-${var.environment_name}"
+  subnets         = ["${aws_subnet.frontend1.id}", "${aws_subnet.frontend2.id}"]
+  security_groups = ["${aws_security_group.api_inbound.id}"]
+
+  tags {
+    Name        = "api-${var.environment_name}"
+    Environment = "${var.environment_name}"
+  }
+}
+
+resource "aws_alb_listener" "api" {
+  load_balancer_arn = "${aws_alb.api.arn}"
+  port              = "80"
+  protocol          = "HTTP"
+  depends_on        = ["aws_alb_target_group.api"]
+
+  default_action {
+    target_group_arn = "${aws_alb_target_group.api.arn}"
+    type             = "forward"
+  }
+}
+
+################################################################################
+
+resource "aws_alb_target_group" "web" {
+  name     = "web-${var.environment_name}-${random_id.target_group_sufix.hex}"
+  port     = "3000"
+  protocol = "HTTP"
+  vpc_id   = "${aws_vpc.main.id}"
+  target_type = "ip"
+
+  lifecycle {
+    create_before_destroy = true
+  }
+
+  tags {
+    Name        = "web-${var.environment_name}"
+    Environment = "${var.environment_name}"
+  }
+}
+
+resource "aws_alb" "web" {
+  name            = "web-${var.environment_name}"
+  subnets         = ["${aws_subnet.frontend1.id}", "${aws_subnet.frontend2.id}"]
+  security_groups = ["${aws_security_group.web_inbound.id}"]
+
+  tags {
+    Name        = "web-${var.environment_name}"
+    Environment = "${var.environment_name}"
+  }
+}
+
+resource "aws_alb_listener" "web" {
+  load_balancer_arn = "${aws_alb.web.arn}"
+  port              = "80"
+  protocol          = "HTTP"
+  depends_on        = ["aws_alb_target_group.web"]
+
+  default_action {
+    target_group_arn = "${aws_alb_target_group.web.arn}"
+    type             = "forward"
+  }
+}
