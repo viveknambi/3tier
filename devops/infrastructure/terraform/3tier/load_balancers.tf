@@ -16,7 +16,6 @@ resource "aws_alb_target_group" "api" {
   }
 
   health_check {
-    protocol = "HTTP"
     path = "/healthcheck"
     matcher = "200"
     interval = 10
@@ -68,7 +67,6 @@ resource "aws_alb_target_group" "web" {
   }
 
   health_check {
-    protocol = "HTTP"
     path = "/healthcheck"
     matcher = "200"
     interval = 10
