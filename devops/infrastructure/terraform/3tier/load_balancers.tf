@@ -15,6 +15,16 @@ resource "aws_alb_target_group" "api" {
     create_before_destroy = true
   }
 
+  health_check {
+    protocol = "HTTP"
+    path = "/healthcheck"
+    matcher = "200"
+    interval = 10
+    healthy_threshold = 2
+    unhealthy_threshold = 2
+    timeout = 6
+  }
+
   tags {
     Name        = "api-${var.environment_name}"
     Environment = "${var.environment_name}"
@@ -55,6 +65,16 @@ resource "aws_alb_target_group" "web" {
 
   lifecycle {
     create_before_destroy = true
+  }
+
+  health_check {
+    protocol = "HTTP"
+    path = "/healthcheck"
+    matcher = "200"
+    interval = 10
+    healthy_threshold = 2
+    unhealthy_threshold = 2
+    timeout = 6
   }
 
   tags {

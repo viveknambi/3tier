@@ -27,6 +27,10 @@ app.get('/api/status', function(req, res) {
   });
 });
 
+app.get('/healthcheck', function(req, res) {
+  return res.status(200).send('OK');
+});
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
