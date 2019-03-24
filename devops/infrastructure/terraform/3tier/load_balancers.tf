@@ -41,11 +41,29 @@ resource "aws_alb" "api" {
   }
 }
 
-resource "aws_alb_listener" "api" {
+resource "aws_alb_listener" "api_http" {
   load_balancer_arn = "${aws_alb.api.arn}"
   port              = "80"
   protocol          = "HTTP"
   depends_on        = ["aws_alb_target_group.api"]
+
+  default_action {
+    type = "redirect"
+    redirect {
+      protocol    = "HTTPS"
+      port        = 443
+      status_code = "HTTP_301"
+    }
+  }
+}
+
+resource "aws_alb_listener" "api_https" {
+  load_balancer_arn = "${aws_alb.api.arn}"
+  port              = "443"
+  protocol          = "HTTPS"
+  depends_on        = ["aws_alb_target_group.api"]
+
+  certificate_arn   = "${aws_acm_certificate_validation.api.certificate_arn}"
 
   default_action {
     target_group_arn = "${aws_alb_target_group.api.arn}"
@@ -92,11 +110,28 @@ resource "aws_alb" "web" {
   }
 }
 
-resource "aws_alb_listener" "web" {
+resource "aws_alb_listener" "web_http" {
   load_balancer_arn = "${aws_alb.web.arn}"
   port              = "80"
   protocol          = "HTTP"
   depends_on        = ["aws_alb_target_group.web"]
+
+  default_action {
+    type = "redirect"
+    redirect {
+      protocol    = "HTTPS"
+      port        = 443
+      status_code = "HTTP_301"
+    }
+  }
+}
+
+resource "aws_alb_listener" "web_https" {
+  load_balancer_arn = "${aws_alb.web.arn}"
+  port              = "443"
+  protocol          = "HTTPS"
+
+  certificate_arn   = "${aws_acm_certificate_validation.web.certificate_arn}"
 
   default_action {
     target_group_arn = "${aws_alb_target_group.web.arn}"

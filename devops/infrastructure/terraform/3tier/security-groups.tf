@@ -57,6 +57,14 @@ resource "aws_security_group_rule" "web_inbound_http_from_all" {
   protocol          = "tcp"
   cidr_blocks       = ["0.0.0.0/0"]
 }
+resource "aws_security_group_rule" "web_inbound_https_from_all" {
+  security_group_id = "${aws_security_group.web_inbound.id}"
+  type              = "ingress"
+  from_port         = "443"
+  to_port           = "443"
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+}
 resource "aws_security_group_rule" "web_inbound_egress_to_web_internal" {
   security_group_id        = "${aws_security_group.web_inbound.id}"
   type                     = "egress"
@@ -88,6 +96,14 @@ resource "aws_security_group_rule" "api_inbound_http_from_all" {
   type              = "ingress"
   from_port         = "80"
   to_port           = "80"
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+}
+resource "aws_security_group_rule" "api_inbound_https_from_all" {
+  security_group_id = "${aws_security_group.api_inbound.id}"
+  type              = "ingress"
+  from_port         = "443"
+  to_port           = "443"
   protocol          = "tcp"
   cidr_blocks       = ["0.0.0.0/0"]
 }
