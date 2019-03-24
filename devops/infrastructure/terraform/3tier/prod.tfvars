@@ -1,5 +1,6 @@
 dns_zone = "robkinyon.org"
 web_name = "www.3tier"
+web_backend_name = "www-backend.3tier"
 api_name = "api.3tier"
 
 rds_encrypted = false

@@ -2,9 +2,11 @@ data "aws_route53_zone" "dns" {
   name = "${var.dns_zone}"
 }
 
+# Even though this is all "web", it uses the "web_backend_name" so that the
+# CloudFront distribution can use the "web_name"
 resource "aws_route53_record" "web" {
   zone_id = "${data.aws_route53_zone.dns.zone_id}"
-  name    = "${var.web_name}.${data.aws_route53_zone.dns.name}"
+  name    = "${var.web_backend_name}.${data.aws_route53_zone.dns.name}"
   type    = "A"
 
   alias {

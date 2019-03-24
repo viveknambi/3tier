@@ -63,7 +63,10 @@ resource "aws_alb_listener" "api_https" {
   protocol          = "HTTPS"
   depends_on        = ["aws_alb_target_group.api"]
 
-  certificate_arn   = "${aws_acm_certificate_validation.api.certificate_arn}"
+  certificate_arn = "${aws_acm_certificate_validation.api.certificate_arn}"
+  depends_on      = [
+    "aws_acm_certificate_validation.api"
+  ]
 
   default_action {
     target_group_arn = "${aws_alb_target_group.api.arn}"
@@ -131,7 +134,10 @@ resource "aws_alb_listener" "web_https" {
   port              = "443"
   protocol          = "HTTPS"
 
-  certificate_arn   = "${aws_acm_certificate_validation.web.certificate_arn}"
+  certificate_arn = "${aws_acm_certificate_validation.web.certificate_arn}"
+  depends_on      = [
+    "aws_acm_certificate_validation.web"
+  ]
 
   default_action {
     target_group_arn = "${aws_alb_target_group.web.arn}"

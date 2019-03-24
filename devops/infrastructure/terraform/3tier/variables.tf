@@ -36,6 +36,11 @@ variable "web_name" {
   description = "Registered DNS name of Route53 zone to put all DNS names"
   default = "www"
 }
+variable "web_backend_name" {
+  type = "string"
+  description = "Registered DNS name of Route53 zone to put all DNS names"
+  default = "www-backend"
+}
 variable "api_name" {
   type = "string"
   description = "Registered DNS name of Route53 zone to put all DNS names"
