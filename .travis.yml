@@ -1,0 +1,17 @@
+services:
+  - docker
+
+language: node_js
+
+node_js:
+  - "11"
+
+before_install:
+  - docker-compose up --build
+
+jobs:
+  include:
+    - stage: test
+      script: cd api && npm test
+    - stage: test
+      script: cd web && npm test
