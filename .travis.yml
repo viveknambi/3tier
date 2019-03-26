@@ -6,6 +6,9 @@ language: node_js
 node_js:
   - "11"
 
+before_install:
+  - docker-compose build
+
 jobs:
   include:
     - stage: test
@@ -15,6 +18,6 @@ jobs:
 
 deploy:
   provider: script
-  script: devops/bin/travis_deploy.sh
+  script: bash devops/bin/travis_deploy.sh
   on:
     branch: master
