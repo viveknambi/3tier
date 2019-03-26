@@ -13,11 +13,8 @@ jobs:
     - stage: test
       script: docker-compose run web npm test
 
-after_success:
-  - pip install --user awscli
-  - export PATH=$PATH:$HOME/.local/bin # put aws in the path
-  - eval $(aws ecr get-login --region us-east-1)
-  - docker tag 3tier_api:latest ${REGISTRY}/three_tier_api
-  - docker push ${REGISTRY}/three_tier_api
-  - docker tag 3tier_web:latest ${REGISTRY}/three_tier_web
-  - docker push ${REGISTRY}/three_tier_web
+deploy:
+  provider: script
+  script: devops/bin/travis_deploy.sh
+  on:
+    branch: master
