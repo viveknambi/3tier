@@ -66,4 +66,16 @@ resource "aws_ecs_service" "web" {
     container_name   = "web"
     container_port   = "3000"
   }
+
+  deployment_controller {
+    type = "ECS"
+  }
+  deployment_maximum_percent = "100"
+  deployment_minimum_healthy_percent = "50"
+
+  tags = {
+    Application = "${var.application_name}"
+    Environment = "${var.environment_name}"
+  }
+  propagate_tags = "SERVICE"
 }

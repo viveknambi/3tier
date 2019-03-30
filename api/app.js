@@ -20,7 +20,7 @@ app.get('/api/status', function(req, res) {
       }
 
       return res.json({
-        request_uuid: "hello",//uuid.v4(),
+        request_uuid: "hello2",//uuid.v4(),
         time: result.rows[0].time
       });
     });
