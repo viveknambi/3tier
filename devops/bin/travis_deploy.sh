@@ -15,4 +15,4 @@ aws ecs update-service --cluster api-production --service api-production --force
 
 docker tag 3tier_web:latest ${REGISTRY}/three_tier_web
 docker push ${REGISTRY}/three_tier_web
-#aws ecs update-service --cluster web-production --service web-production --force-new-deployment
+aws ecs update-service --cluster web-production --service web-production --force-new-deployment
