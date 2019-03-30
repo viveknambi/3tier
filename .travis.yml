@@ -18,6 +18,6 @@ jobs:
 
 deploy:
   provider: script
-  script: bash devops/bin/travis_deploy.sh
+  script: chmod +x ./devops/bin/travis_deploy.sh && ./devops/bin/travis_deploy.sh
   on:
     branch: master
