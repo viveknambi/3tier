@@ -5,6 +5,9 @@ if ! command -v aws >/dev/null 2>&1; then
   export PATH=$PATH:$HOME/.local/bin # put aws in the path
 fi
 
+export AWS_REGION=us-east-1
+export AWS_DEFAULT_REGION=us-east-1
+
 eval $(aws ecr get-login --region us-east-1 --no-include-email)
 
 REGISTRY="${AWS_ACCOUNT_ID}.dkr.ecr.us-east-1.amazonaws.com"
