@@ -1,4 +1,4 @@
-#!/bin/bash -eu
+#!/bin/bash -eux
 
 if ! command -v aws >/dev/null 2>&1; then
   pip install --user awscli
