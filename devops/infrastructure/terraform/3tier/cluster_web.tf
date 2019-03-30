@@ -70,7 +70,7 @@ resource "aws_ecs_service" "web" {
   deployment_controller {
     type = "ECS"
   }
-  deployment_maximum_percent = "100"
+  deployment_maximum_percent = "200"
   deployment_minimum_healthy_percent = "50"
 
   tags = {

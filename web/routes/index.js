@@ -23,7 +23,7 @@ router.get('/', function(req, res, next) {
       } else {
         res.render('index', {
           title: '3tier App' ,
-          request_uuid: body.request_uuid + " x1",
+          request_uuid: body.request_uuid + " x3",
           time: body.time
         });
       }
