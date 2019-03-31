@@ -2,10 +2,6 @@ resource "aws_ecr_repository" "api" {
   name = "three_tier_api"
 }
 
-resource "aws_ecs_cluster" "api" {
-  name = "api-${var.environment_name}"
-}
-
 resource "aws_cloudwatch_log_group" "api" {
   name = "api-${var.application_name}"
 
@@ -49,7 +45,7 @@ resource "aws_ecs_service" "api" {
   task_definition = "${aws_ecs_task_definition.api.family}:${max("${aws_ecs_task_definition.api.revision}", "${data.aws_ecs_task_definition.api.revision}")}"
   desired_count   = 2
   launch_type     = "FARGATE"
-  cluster         = "${aws_ecs_cluster.api.id}"
+  cluster         = "${aws_ecs_cluster.3tier.id}"
   depends_on      = [
     "aws_iam_role_policy.ecs_service_role_policy",
     "aws_alb_target_group.api",

@@ -2,10 +2,6 @@ resource "aws_ecr_repository" "web" {
   name = "three_tier_web"
 }
 
-resource "aws_ecs_cluster" "web" {
-  name = "web-${var.environment_name}"
-}
-
 resource "aws_cloudwatch_log_group" "web" {
   name = "web-${var.application_name}"
 
@@ -49,7 +45,7 @@ resource "aws_ecs_service" "web" {
   task_definition = "${aws_ecs_task_definition.web.family}:${max("${aws_ecs_task_definition.web.revision}", "${data.aws_ecs_task_definition.web.revision}")}"
   desired_count   = 2
   launch_type     = "FARGATE"
-  cluster         = "${aws_ecs_cluster.web.id}"
+  cluster         = "${aws_ecs_cluster.3tier.id}"
   depends_on      = [
     "aws_iam_role_policy.ecs_service_role_policy",
     "aws_alb_target_group.web",
