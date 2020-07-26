@@ -12,7 +12,7 @@ services:
       PORT: "3000"
       NODE_ENV: development
     ports:
-      - "3000:3000"
+      - "3000:3001"
     # Instead of requiring developers to do "docker-compose up --build", we
     # could use this. However, for a completely clean developer experience, we
     # would need to pair that with live-reloading, possibly with nodemon.
